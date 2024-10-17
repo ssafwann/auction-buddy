@@ -71,11 +71,14 @@ export const bids = pgTable('bb_bids',{
     id: serial("id").primaryKey(),
 });
 
+// make sure to give a defautl value to your new columns otherwise what drizzle does is that it tries to remove every single row of data..
+// aka you might lose 1000s of records
 export const items = pgTable('bb_item',{
   id: serial("id").primaryKey(),
   userId: text("userId")
   .notNull()
   .references(() => users.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
+  startingPrice: integer("startingPrice").notNull().default(0),
 });
 
